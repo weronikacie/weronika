@@ -1,4 +1,5 @@
 import requests
+import argparse
 from typing import Optional
 
 
@@ -10,7 +11,7 @@ class Brewery:
         brewery_type: str,
         city: str,
         country: str,
-        website_url: Optional[str]
+        website_url: Optional[str],
     ):
         self.id = id
         self.name = name
@@ -30,9 +31,14 @@ class Brewery:
         )
 
 
-def get_breweries() -> list[Brewery]:
-    url = "https://api.openbrewerydb.org/v1/breweries?per_page=20"
-    response = requests.get(url)
+def get_breweries(city: Optional[str]) -> list[Brewery]:
+    url = "https://api.openbrewerydb.org/v1/breweries"
+    params = {"per_page": 20}
+
+    if city:
+        params["by_city"] = city
+
+    response = requests.get(url, params=params)
     data = response.json()
 
     breweries = []
@@ -43,7 +49,7 @@ def get_breweries() -> list[Brewery]:
             brewery_type=item["brewery_type"],
             city=item["city"],
             country=item["country"],
-            website_url=item.get("website_url")
+            website_url=item.get("website_url"),
         )
         breweries.append(brewery)
 
@@ -51,7 +57,11 @@ def get_breweries() -> list[Brewery]:
 
 
 if __name__ == "__main__":
-    breweries_list = get_breweries()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--city", type=str, help="Nazwa miasta")
+    args = parser.parse_args()
+
+    breweries_list = get_breweries(args.city)
 
     for brewery in breweries_list:
         print(brewery)

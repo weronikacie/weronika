@@ -1,0 +1,24 @@
+name: PEP8 check
+
+on: [push]
+
+jobs:
+  pep8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install pycodestyle
+
+      - name: Run pycodestyle
+        run: |
+          pycodestyle --exclude=.venv .
+
