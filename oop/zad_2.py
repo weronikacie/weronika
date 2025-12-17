@@ -2,7 +2,13 @@ from typing import List
 
 
 class Library:
-    def __init__(self, city: str, street: str, zip_code: str, open_hours: str, phone: str):
+    def __init__(
+        self, city: str,
+            street: str,
+            zip_code: str,
+            open_hours: str,
+            phone: str
+    ):
         self.city = city
         self.street = street
         self.zip_code = zip_code
@@ -103,9 +109,30 @@ books = [
     Book(library2, "2022", "Juliusz", "Słowacki", 320),
 ]
 
-employee1 = Employee("Jan", "Nowak", "2020", "1990", "Warszawa", "A", "00-001", "111")
-employee2 = Employee("Anna", "Kowalska", "2019", "1988", "Kraków", "B", "30-001", "222")
-employee3 = Employee("Piotr", "Zieliński", "2021", "1995", "Kraków", "C", "30-002", "333")
+employee1 = Employee("Jan",
+                     "Nowak",
+                     "2020",
+                     "1990",
+                     "Warszawa",
+                     "A",
+                     "00-001",
+                     "111")
+employee2 = Employee("Anna",
+                     "Kowalska",
+                     "2019",
+                     "1988",
+                     "Kraków",
+                     "B",
+                     "30-001",
+                     "222")
+employee3 = Employee("Piotr",
+                     "Zieliński",
+                     "2021",
+                     "1995",
+                     "Kraków",
+                     "C",
+                     "30-002",
+                     "333")
 
 student1 = Student("Ola")
 student2 = Student("Tomek")

@@ -19,6 +19,3 @@ student2 = Student("Ola", [40, 70, 30])
 
 print(student1.name, student1.is_passed())
 print(student2.name, student2.is_passed())
-
-
-
