@@ -1,9 +1,7 @@
-import csv
-from typing import Union
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
 
-from fastapi import FastAPI
-from pydantic import BaseModel
-
+from database import SessionLocal
 from models.movie import Movie
 from models.link import Link
 from models.rating import Rating
@@ -12,82 +10,62 @@ from models.tag import Tag
 app = FastAPI()
 
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Union[bool, None] = None
+# połączenie z bazą
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
+def root():
+    return {"status": "API with SQLite is running"}
 
 
 @app.get("/movies")
-def get_movies():
-    movies = []
-
-    with open("data/movies.csv", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)
-
-        for row in reader:
-            movie = Movie(row[0], row[1], row[2])
-            movies.append(movie.__dict__)
-
-    return movies
+def get_movies(db: Session = Depends(get_db)):
+    movies = db.query(Movie).all()
+    return [
+        {"movie_id": m.movie_id, "title": m.title, "genres": m.genres}
+        for m in movies
+    ]
 
 
 @app.get("/links")
-def get_links():
-    links = []
-
-    with open("data/links.csv", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)
-
-        for row in reader:
-            link = Link(row[0], row[1], row[2])
-            links.append(link.__dict__)
-
-    return links
+def get_links(db: Session = Depends(get_db)):
+    links = db.query(Link).all()
+    return [
+        {"movie_id": l.movie_id, "imdb_id": l.imdb_id, "tmdb_id": l.tmdb_id}
+        for l in links
+    ]
 
 
 @app.get("/ratings")
-def get_ratings():
-    ratings = []
-
-    with open("data/ratings.csv", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)
-
-        for row in reader:
-            rating = Rating(row[0], row[1], row[2], row[3])
-            ratings.append(rating.__dict__)
-
-    return ratings
+def get_ratings(db: Session = Depends(get_db)):
+    ratings = db.query(Rating).all()
+    return [
+        {
+            "user_id": r.user_id,
+            "movie_id": r.movie_id,
+            "rating": r.rating,
+            "timestamp": r.timestamp
+        }
+        for r in ratings
+    ]
 
 
 @app.get("/tags")
-def get_tags():
-    tags = []
+def get_tags(db: Session = Depends(get_db)):
+    tags = db.query(Tag).all()
+    return [
+        {
+            "user_id": t.user_id,
+            "movie_id": t.movie_id,
+            "tag": t.tag,
+            "timestamp": t.timestamp
+        }
+        for t in tags
+    ]
 
-    with open("data/tags.csv", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)
-
-        for row in reader:
-            tag = Tag(row[0], row[1], row[2], row[3])
-            tags.append(tag.__dict__)
-
-    return tags

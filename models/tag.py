@@ -1,6 +1,11 @@
-class Tag:
-    def __init__(self, user_id, movie_id, tag, timestamp):
-        self.user_id = user_id
-        self.movie_id = movie_id
-        self.tag = tag
-        self.timestamp = timestamp
+from sqlalchemy import Column, Integer, String
+from db_base import Base
+
+class Tag(Base):
+    __tablename__ = "tags"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer)
+    movie_id = Column(Integer)
+    tag = Column(String)
+    timestamp = Column(Integer)

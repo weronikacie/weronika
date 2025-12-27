@@ -1,6 +1,12 @@
-class Rating:
-    def __init__(self, user_id, movie_id, rating, timestamp):
-        self.user_id = user_id
-        self.movie_id = movie_id
-        self.rating = rating
-        self.timestamp = timestamp
+from sqlalchemy import Column, Integer, Float
+from db_base import Base
+
+class Rating(Base):
+    __tablename__ = "ratings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer)
+    movie_id = Column(Integer)
+    rating = Column(Float)
+    timestamp = Column(Integer)
+

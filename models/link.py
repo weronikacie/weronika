@@ -1,5 +1,9 @@
-class Link:
-    def __init__(self, movie_id, imdb_id, tmdb_id):
-        self.movie_id = movie_id
-        self.imdb_id = imdb_id
-        self.tmdb_id = tmdb_id
+from sqlalchemy import Column, Integer, String
+from db_base import Base
+
+class Link(Base):
+    __tablename__ = "links"
+
+    movie_id = Column(Integer, primary_key=True)
+    imdb_id = Column(String)
+    tmdb_id = Column(String)

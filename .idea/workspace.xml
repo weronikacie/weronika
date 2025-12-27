@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c73da697-06cd-438d-a183-769faea01dde" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db_base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/load_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oop/zad_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/oop/zad_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oop/zad_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/oop/zad_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oop/zad_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/oop/zad_3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zad17.11.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/link.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/link.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/movie.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/movie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/rating.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/rating.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/tag.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "python__oop"
+    "git-widget-placeholder": "python__api__sqlite"
   }
 }]]></component>
   <component name="RecentsManager">
