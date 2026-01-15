@@ -1,69 +1,84 @@
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-
-from database import SessionLocal
-from models.movie import Movie
-from models.link import Link
-from models.rating import Rating
-from models.tag import Tag
+from fastapi import FastAPI, UploadFile, File, HTTPException
+from ultralytics import YOLO
+import cv2
+import os
+import uuid
+import shutil
+import requests
 
 app = FastAPI()
 
+print("Ładowanie modelu YOLO...")
+model = YOLO('yolov8n.pt')
+print("Model załadowany!")
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+os.makedirs("images", exist_ok=True)
+os.makedirs("processed", exist_ok=True)
 
+def process_image(image_path: str):
+    results = model(image_path, classes=0)
+
+    people_count = 0
+    output_filename = f"processed/done_{os.path.basename(image_path)}"
+
+    for result in results:
+        people_count += len(result.boxes)
+        im_array = result.plot()
+        cv2.imwrite(output_filename, im_array)
+
+    return people_count, output_filename
 
 @app.get("/")
-def root():
-    return {"status": "API with SQLite is running"}
+def read_root():
+    return {"message": "API działa! Wejdź na /docs"}
 
+@app.get("/detect/local")
+def detect_local(file_path: str):
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Plik nie istnieje")
 
-@app.get("/movies")
-def get_movies(db: Session = Depends(get_db)):
-    movies = db.query(Movie).all()
-    return [
-        {"movie_id": m.movie_id, "title": m.title, "genres": m.genres}
-        for m in movies
-    ]
+    count, out_path = process_image(file_path)
+    return {
+        "source": "local",
+        "people_count": count,
+        "saved_image": out_path
+    }
 
+@app.get("/detect/url")
+def detect_url(image_url: str):
+    try:
+        response = requests.get(image_url)
+        if response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Nie udało się pobrać zdjęcia")
 
-@app.get("/links")
-def get_links(db: Session = Depends(get_db)):
-    links = db.query(Link).all()
-    return [
-        {"movie_id": l.movie_id, "imdb_id": l.imdb_id, "tmdb_id": l.tmdb_id}
-        for l in links
-    ]
+        filename = f"images/{uuid.uuid4()}.jpg"
+        with open(filename, 'wb') as f:
+            f.write(response.content)
 
+        count, out_path = process_image(filename)
 
-@app.get("/ratings")
-def get_ratings(db: Session = Depends(get_db)):
-    ratings = db.query(Rating).all()
-    return [
-        {
-            "user_id": r.user_id,
-            "movie_id": r.movie_id,
-            "rating": r.rating,
-            "timestamp": r.timestamp
+        return {
+            "source": "url",
+            "people_count": count,
+            "saved_image": out_path
         }
-        for r in ratings
-    ]
+    except Exception as e:
+        return {"error": str(e)}
 
+@app.post("/detect/upload")
+def detect_upload(file: UploadFile = File(...)):
+    filename = f"images/{uuid.uuid4()}_{file.filename}"
+    with open(filename, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-@app.get("/tags")
-def get_tags(db: Session = Depends(get_db)):
-    tags = db.query(Tag).all()
-    return [
-        {
-            "user_id": t.user_id,
-            "movie_id": t.movie_id,
-            "tag": t.tag,
-            "timestamp": t.timestamp
-        }
-        for t in tags
-    ]
+    count, out_path = process_image(filename)
+
+    return {
+        "source": "upload",
+        "people_count": count,
+        "saved_image": out_path
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
