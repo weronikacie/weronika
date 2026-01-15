@@ -1,3 +1,7 @@
+from models.tag import Tag
+from models.rating import Rating
+from models.link import Link
+from models.movie import Movie
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db_base import Base
@@ -11,11 +15,5 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-from models.movie import Movie
-from models.link import Link
-from models.rating import Rating
-from models.tag import Tag
 
 Base.metadata.create_all(bind=engine)
-
-

@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Float
 from db_base import Base
 
+
 class Rating(Base):
     __tablename__ = "ratings"
 
@@ -9,4 +10,3 @@ class Rating(Base):
     movie_id = Column(Integer)
     rating = Column(Float)
     timestamp = Column(Integer)
-

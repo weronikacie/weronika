@@ -10,7 +10,6 @@ from models.tag import Tag
 app = FastAPI()
 
 
-# połączenie z bazą
 def get_db():
     db = SessionLocal()
     try:
@@ -68,4 +67,3 @@ def get_tags(db: Session = Depends(get_db)):
         }
         for t in tags
     ]
-

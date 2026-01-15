@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from db_base import Base
 
+
 class Link(Base):
     __tablename__ = "links"
 
