@@ -5,11 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c73da697-06cd-438d-a183-769faea01dde" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/weronika.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/weronika.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/links.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/movies.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ratings.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tags.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/load_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/link.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/movie.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/rating.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tag.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop/zad_1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop/zad_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop/zad_3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_4.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_5.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_6.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_7.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/typing/zad_8.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +53,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
