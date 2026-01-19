@@ -1,10 +1,12 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
-from ultralytics import YOLO
-import cv2
 import os
-import uuid
 import shutil
+import uuid
+
+import cv2
 import requests
+import uvicorn
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from ultralytics import YOLO
 
 app = FastAPI()
 
@@ -14,6 +16,7 @@ print("Model załadowany!")
 
 os.makedirs("images", exist_ok=True)
 os.makedirs("processed", exist_ok=True)
+
 
 def process_image(image_path: str):
     results = model(image_path, classes=0)
@@ -28,9 +31,11 @@ def process_image(image_path: str):
 
     return people_count, output_filename
 
+
 @app.get("/")
 def read_root():
     return {"message": "API działa! Wejdź na /docs"}
+
 
 @app.get("/detect/local")
 def detect_local(file_path: str):
@@ -43,6 +48,7 @@ def detect_local(file_path: str):
         "people_count": count,
         "saved_image": out_path
     }
+
 
 @app.get("/detect/url")
 def detect_url(image_url: str):
@@ -65,6 +71,7 @@ def detect_url(image_url: str):
     except Exception as e:
         return {"error": str(e)}
 
+
 @app.post("/detect/upload")
 def detect_upload(file: UploadFile = File(...)):
     filename = f"images/{uuid.uuid4()}_{file.filename}"
@@ -79,6 +86,6 @@ def detect_upload(file: UploadFile = File(...)):
         "saved_image": out_path
     }
 
+
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
